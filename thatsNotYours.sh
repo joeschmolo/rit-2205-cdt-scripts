@@ -11,20 +11,20 @@
 
 echo "Current permissions on /etc/passwd (Should be rw-r-r- root:passwd):"
 ls -lA /etc/passwd
-echo
 echo "Setting correct permissions on /etc/passwd..."
 sudo chown root:root /etc/passwd
 sudo chmod 644 /etc/passwd
 echo
+
 echo "Current permissions on /etc/passwd (Should be rw-r--- root:shadow):"
 ls -lA /etc/shadow
-echo
 echo "Setting correct permissions on /etc/shadow..."
 sudo chown root:shadow /etc/shadow
 sudo chmod 640 /etc/shadow
 echo
+
 echo "Setting correct permissions for users with home directory set to /home/user..."
-for userselect in `awk -F; '{ print $1}' /etc/passwd`
+for userselect in `cut -d: -f1 /etc/passwd`
     # Test for user's directory existance
 	if [ -d /home/$userselect ]; then
         echo "/home/$userselect"
