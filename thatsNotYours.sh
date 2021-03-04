@@ -1,11 +1,32 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Author: Joe Schultz (jxs6799@rit.edu)
 #
 # Description:  Set correct permissions on certain system/user
-#               files (/etc/passwd, /etc/shadow, $HOME, etc.)
+#               files (/etc/passwd, /etc/shadow, $HOME, etc.).
+#               REMOVES .ssh FOLDERS in HOME DIRS
 #
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-# TODO
+sudo chown root:root /etc/passwd
+sudo chmod 644 /etc/passwd
+
+sudo chown root:shadow /etc/shadow
+sudo chmod 640 /etc/shadow
+
+
+for userselect in `awk -F; '{ print $1}' /etc/passwd`
+    # Test for user's directory existance
+	if [ -d /home/$userselect ]; then
+        echo "/home/$userselect"
+        chown -R $userselect:$userselect /home/$userselect
+		chmod 755 /home/$userselect
+        if [ -d /home/$userselect/.ssh ]; then
+            echo "/home/$userselect/.ssh FOUND! Possible keys stored.  Deleting folder..."
+            rm -rf /home/$userselect/.ssh
+        fi
+		chmod 700 /home/$userselect/*
+        echo "Permissions have been corrected for user $userselect"
+	fi
+done
