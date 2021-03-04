@@ -28,6 +28,9 @@ iptables -A OUTPUT -o lo -j ACCEPT
 iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+# Allow Outbound DNS Lookups
+iptables -A OUTPUT -p tcp --dport 53 -m state --state NEW -j ACCEPT -m comment --comment "ALLOW OUTBOUND DNS Connections"
+
 # Allow ICMP
 iptables -A INPUT -p icmp -j ACCEPT -m comment --comment "ALLOW INBOUND ICMP Connections"
 iptables -A OUTPUT -p icmp -j ACCEPT -m comment --comment "ALLOW OUTBOUND ICMP Connections"
