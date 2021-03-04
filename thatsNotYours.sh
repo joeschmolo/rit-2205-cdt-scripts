@@ -9,14 +9,14 @@
 #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-echo "Current permissions on /etc/passwd (Should be rw-r-r- root:passwd):"
+echo "Current permissions on /etc/passwd (Should be rw-r-r- root:root):"
 ls -lA /etc/passwd
 echo "Setting correct permissions on /etc/passwd..."
 sudo chown root:root /etc/passwd
 sudo chmod 644 /etc/passwd
 echo
 
-echo "Current permissions on /etc/passwd (Should be rw-r--- root:shadow):"
+echo "Current permissions on /etc/shadow (Should be rw-r--- root:shadow):"
 ls -lA /etc/shadow
 echo "Setting correct permissions on /etc/shadow..."
 sudo chown root:shadow /etc/shadow
